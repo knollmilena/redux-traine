@@ -1,6 +1,7 @@
 import { React, useRef, useState } from 'react';
 import './todo-field.css';
 import { useDispatch } from 'react-redux';
+import { changeStatus, delTodo } from '../../../store';
 
 const TodoField = ({ text, id, status }) => {
     const [disabled, setDisabled] = useState(false);
@@ -10,9 +11,12 @@ const TodoField = ({ text, id, status }) => {
     const dispatch = useDispatch();
 
     const deleteTodo = () => {
-        dispatch({ type: 'DELETE_TODO', id: id });
+        dispatch(delTodo(id));
     };
 
+    const setFlag = () => {
+        dispatch(changeStatus(id));
+    };
     const showInput = () => {
         setDisabled((prev) => !prev);
         setTimeout(() => {
@@ -54,7 +58,9 @@ const TodoField = ({ text, id, status }) => {
             <button className="delBtn" onClick={deleteTodo}>
                 🗑️
             </button>
-            <button className="complitedBtn">✔️</button>
+            <button className="complitedBtn" onClick={setFlag}>
+                ✔️
+            </button>
         </div>
     );
 };
